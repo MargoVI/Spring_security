@@ -7,11 +7,13 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import ru.itmentor.spring.boot_security.demo.entity.Role;
 import ru.itmentor.spring.boot_security.demo.entity.User;
 import ru.itmentor.spring.boot_security.demo.service.RoleService;
 import ru.itmentor.spring.boot_security.demo.service.UserService;
 
 import javax.validation.Valid;
+import java.util.Collections;
 
 @Controller
 @RequestMapping("/admin")
@@ -36,16 +38,20 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @GetMapping("/new") // create работает без изменения роли
-    public String registration(Model model) {
+    @GetMapping("/new") // create работает без добавления роли
+    public String registration(Model model, Model model1) {
         model.addAttribute("userForm", new User());
+        model.addAttribute("roleForm", new Role());
         return "new";
     }
     @PostMapping("/new")
-    public String addUser(@ModelAttribute("userForm") @Valid User userForm, BindingResult bindingResult, Model model) {
+    public String addUser(@ModelAttribute("userForm") @Valid User userForm, @ModelAttribute("userForm") @Valid Role roleForm, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
             return "new";
+        }
+        if (roleForm.equals("ROLE_ADMIN")){
+            userForm.setRoles(Collections.singleton(new Role(2L, "ROLE_ADMIN")));
         }
         if (!userService.saveUser(userForm)){
             model.addAttribute("usernameError", "Пользователь с таким именем уже существует");
