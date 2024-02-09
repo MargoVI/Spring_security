@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>All users</title>
+</head>
+<body>
+
+<div>
+  <hr/>
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Username</th>
+            <th>Password</th>
+            <th>Age</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Actions</th>
+        </tr>
+
+        <tr th:each="user : ${users}">
+            <td th:text="${user.getId()}">Id</td>
+            <td th:text="${user.getUsername()}">Username</td>
+            <td th:text="${user.getPassword()}">Password</td>
+            <td th:text="${user.getAge()}">Age</td>
+            <td th:text="${user.getEmail()}">Email</td>
+            <td th:text="${user.getRoles()}">Role</td>
+            <td>
+                <form th:action="@{/admin/showAll/{id}/edit(id=${user.id})}" th:object="${user}">
+                    <button type="submit">Edit</button>
+                </form>
+            </td>
+            <td>
+                <form th:method="DELETE" th:action="@{/admin/showAll/{id}/delete(id=${user.id})}">
+                    <input type="hidden" name="id" th:value="${user.id}">
+                    <button style="background: lightpink" type="submit" value="Delete">Delete</button>
+                </form>
+            </td>
+    </tr>
+  </table>
+  <br>
+  <form th:action="@{/admin/new}">
+    <button type="submit">Create new user</button>
+  </form>
+  <br>
+  <form th:action="@{/logout}" method="post">
+    <input type="submit" value="logout">
+  </form>
+</div>
+
+</body>
+</html>
