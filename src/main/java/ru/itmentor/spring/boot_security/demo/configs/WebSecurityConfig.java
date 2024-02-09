@@ -9,18 +9,21 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.filter.HiddenHttpMethodFilter;
 import ru.itmentor.spring.boot_security.demo.service.UserService;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    SuccessUserHandler successUserHandler;
+    private final SuccessUserHandler successUserHandler;
+
+    private final UserService userService;
 
     @Autowired
-    UserService userService;
+    public WebSecurityConfig(SuccessUserHandler successUserHandler, UserService userService) {
+        this.successUserHandler = successUserHandler;
+        this.userService = userService;
+    }
 
     @Bean
     public PasswordEncoder getPasswordEncoder(){

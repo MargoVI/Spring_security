@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Spring Security Example</title>
 </head>
@@ -10,8 +10,6 @@
 <h3>Your data</h3>
 <br/>
 <td th:utext="${user.toString()}">data</td>
-<!--<div sec:authorize="isAuthenticated()">Authenticated as <span sec:authentication="name"></span></div>-->
-
 <br>
 <br>
 <br>

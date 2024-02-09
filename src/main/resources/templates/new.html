@@ -9,8 +9,10 @@
 <div>
   <br>
   <form method="POST" th:action="@{/admin/new}" th:object="${userForm}">
-      <label for="username">Enter username</label>
+      <label for="username">Username</label>
       <input type="text" th:field="*{username}" id="username"/>
+          <h4 style="color:red" th:text="${usernameError}"></h4>
+      </th:block>
       </p>
       <label for="password">Password</label>
       <input type="password" th:field="*{password}" id="password"/>
