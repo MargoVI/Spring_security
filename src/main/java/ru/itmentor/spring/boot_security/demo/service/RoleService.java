@@ -48,13 +48,11 @@ public class RoleService {
     }
 
 
-
-    //// ????
     public Role loadUserByRoleName(String roleName) throws UsernameNotFoundException {
         Role role = roleRepository.findByRoleName(roleName);
 
         if (role == null) {
-            throw new UsernameNotFoundException("Role not found");
+            throw new UsernameNotFoundException("User not found");
         }
 
         return role;

@@ -21,10 +21,6 @@
       <label for="email">Email</label>
       <input type="text" th:field="*{email}" id="email"/>
     <br/>
-      <form method="POST" th:action="@{/admin/new}" th:object="${roleForm}">
-          <label for="name">Enter username</label>
-          <input type="text" th:field="*{name}" id="username"/>
-          </p>
     <button type="submit">Create new user</button>
   </form>
   <br/>
