@@ -21,6 +21,18 @@
     <label for="email">Email</label>
     <input type="text" th:field="${user.email}" id="email"/>
     <br/>
+    <div class="form-group row">
+        <label class="col-form-label col-sm-4">Roles: </label>
+        <div class="col-sm-8">
+            <th:block th:each ="role : ${setRoles}">
+                <div>
+                    <input type="checkbox"  th:field="*{roles}" th:text="${role.name}"
+                           th:value="${role.id}" />
+                </div>
+            </th:block>
+        </div>
+    </div>
+    <br/>
     <input type="submit" value="Update!"/>
   </form>
   <br/>

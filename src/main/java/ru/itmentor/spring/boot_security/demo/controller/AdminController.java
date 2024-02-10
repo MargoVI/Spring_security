@@ -5,11 +5,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ru.itmentor.spring.boot_security.demo.entity.Role;
 import ru.itmentor.spring.boot_security.demo.entity.User;
 import ru.itmentor.spring.boot_security.demo.service.RoleService;
 import ru.itmentor.spring.boot_security.demo.service.UserService;
 
 import javax.validation.Valid;
+import java.util.Set;
 
 
 @Controller
@@ -37,6 +39,9 @@ public class AdminController {
 
     @GetMapping("/new")
     public String registration(Model model) {
+
+        Set<Role> setRoles = roleService.getAllRoles();
+        model.addAttribute("setRoles", setRoles);
         model.addAttribute("userForm", new User());
         return "new";
     }
@@ -55,6 +60,8 @@ public class AdminController {
 
     @GetMapping("showAll/{id}/edit")
     public String edit(Model model, @PathVariable("id") Long id) {
+        Set<Role> setRoles = roleService.getAllRoles();
+        model.addAttribute("setRoles", setRoles);
         model.addAttribute("user", userService.findUserById(id));
         return "edit";
     }

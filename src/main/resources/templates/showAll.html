@@ -44,6 +44,10 @@
     <button type="submit">Create new user</button>
   </form>
   <br>
+    <form th:action="@{/user}">
+        <button style="background: lightblue" type="submit">For admin with role "user"</button>
+    </form>
+    <br>
   <form th:action="@{/logout}" method="post">
     <input type="submit" value="logout">
   </form>

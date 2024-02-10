@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.itmentor.spring.boot_security.demo.entity.Role;
 import ru.itmentor.spring.boot_security.demo.entity.User;
 import ru.itmentor.spring.boot_security.demo.repository.RoleRepository;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional(readOnly = true)
 public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
@@ -45,6 +47,7 @@ public class UserService implements UserDetailsService {
         return userRepository.findAll();
     }
 
+    @Transactional
     public boolean saveUser(User user) {
         User userFromDB = userRepository.findByUsername(user.getUsername());
 
@@ -52,19 +55,19 @@ public class UserService implements UserDetailsService {
             return false;
         }
 
-        user.setRoles(Collections.singleton(new Role(2L, "ROLE_USER")));
         user.setPassword(NoOpPasswordEncoder.getInstance().encode(user.getPassword()));
         userRepository.save(user);
         return true;
     }
 
+    @Transactional
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }
 
+    @Transactional
     public void update(Long id, User updatedUser) {
         updatedUser.setId(id);
-        updatedUser.setRoles(Collections.singleton(new Role(2L, "ROLE_USER")));
         userRepository.save(updatedUser);
     }
 }
