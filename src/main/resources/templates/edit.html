@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Update user</title>
+</head>
+<body>
+<h2>Update user</h2>
+  <br/>
+
+<form th:method="PATCH" th:action="@{/admin/showAll/{id}(id=${user.getId()})}" th:object="${user}">
+    <label for="username">Enter username</label>
+    <input type="text" th:field="${user.username}" id="username"/>
+    <br/>
+    <label for="password">Password</label>
+    <input type="password" th:field="${user.password}" id="password"/>
+    <br/>
+    <label for="age">Age</label>
+    <input type="number" th:field="${user.age}" id="age"/>
+    <br/>
+    <label for="email">Email</label>
+    <input type="text" th:field="${user.email}" id="email"/>
+    <br/>
+    <div class="form-group row">
+        <label class="col-form-label col-sm-4">Roles: </label>
+        <div class="col-sm-8">
+            <th:block th:each ="role : ${setRoles}">
+                <div>
+                    <input type="checkbox"  th:field="*{roles}" th:text="${role.name}"
+                           th:value="${role.id}" />
+                </div>
+            </th:block>
+        </div>
+    </div>
+    <br/>
+    <input type="submit" value="Update!"/>
+  </form>
+  <br/>
+  <form th:action="@{/admin}">
+    <button type="submit" class="btn btn-outline-danger">List users</button>
+  </form>
+
+</body>
+</html>
