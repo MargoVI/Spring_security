@@ -1,5 +1,7 @@
 package ru.itmentor.spring.boot_security.demo.entity;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -31,7 +33,13 @@ public class User implements UserDetails {
     @Email
     private String email;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
+    @Fetch(value = FetchMode.JOIN)
+    @JoinTable(
+            name = "t_user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "roles_id")
+    )
     private Set<Role> roles;
 
     public User() {
